@@ -9,10 +9,74 @@ from neupy.layers.utils import preformat_layer_shape, create_input_variable
 from neupy.utils import as_tuple
 from .utils import join, is_sequential
 from .graph import LayerGraph
-from .inline import InlineConnection
 
 
-__all__ = ('LayerConnection', 'BaseConnection', 'ParallelConnection')
+__all__ = ('LayerConnection', 'BaseConnection', 'ParallelConnection',
+           'InlineConnection')
+
+
+class InlineConnection(object):
+    events = []
+
+    def __gt__(self, other):
+        return self.compare(self, other)
+
+    def __lt__(self, other):
+        return self.compare(other, self)
+
+    def compare(self, left, right):
+        original_connection = self.connect(left, right)
+        self.events.append(('__gt__', left, right, original_connection))
+
+        subgraph = LayerGraph()
+
+        previous_operator = None
+        for operation in reversed(self.events):
+            operator = operation[0]
+
+            if operator == previous_operator:
+                break
+
+            if operator == '__gt__':
+                _, left_operation, right_operation, prev_conn = operation
+
+                if isinstance(left_operation, (list, tuple)):
+                    left_operation = ParallelConnection(left_operation)
+
+                if isinstance(right_operation, (list, tuple)):
+                    right_operation = ParallelConnection(right_operation)
+
+                subgraph = LayerGraph.merge(subgraph, prev_conn.graph)
+                # subgraph = LayerGraph.merge(subgraph, right_operation.graph.subgraph(
+                #     right_operation.input_layers,
+                #     right_operation.output_layers,
+                # ))
+
+                for left_layer in left_operation.output_layers:
+                    for right_layer in right_operation.input_layers:
+                        subgraph.connect_layers(left_layer, right_layer)
+
+            previous_operator = operator
+
+        from neupy import layers
+        connection = LayerConnection(layers.Relu(), layers.Relu())
+        connection.full_graph = original_connection.full_graph
+        connection.graph = connection.full_graph.subgraph(
+            subgraph.input_layers,
+            subgraph.output_layers,
+        )
+        connection.input_layers = subgraph.input_layers
+        connection.output_layers = subgraph.output_layers
+
+        return connection
+
+    def __bool__(self):
+        self.events.append(('__bool__', self))
+        return True
+
+    def __nonzero__(self):
+        # Hack for python 2
+        return self.__bool__()
 
 
 def create_input_variables(input_layers):

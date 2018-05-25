@@ -143,7 +143,7 @@ class InlineConnectionsTestCase(BaseTestCase):
             list(connection_2),
             [input_layer_2, hidden_layer, output_layer])
 
-    @unittest.skip("Not working right now. Feature disabled.")
+    # @unittest.skip("Not working right now. Feature disabled.")
     def test_mixed_inline_connections_many_in_one_out(self):
         input_layer_1 = layers.Input(1)
         input_layer_2 = layers.Input(1)
@@ -155,7 +155,7 @@ class InlineConnectionsTestCase(BaseTestCase):
         self.assertEqual(connection.input_shape, [(1,), (1,)])
         self.assertEqual(connection.output_shape, (5,))
 
-    @unittest.skip("Not working right now. Feature disabled.")
+    # @unittest.skip("Not working right now. Feature disabled.")
     def test_mixed_inline_connections_one_in_many_out(self):
         input_layer = layers.Input(2)
         output_layer_1 = layers.Sigmoid(10)
@@ -165,9 +165,9 @@ class InlineConnectionsTestCase(BaseTestCase):
 
         self.assertEqual(len(connection), 3)
         self.assertEqual(connection.input_shape, (2,))
-        self.assertEqual(connection.output_shape, [(10,), (20,)])
+        self.assertEqual(sorted(connection.output_shape), sorted([(10,), (20,)]))
 
-    @unittest.skip("Not working right now")
+    # @unittest.skip("Not working right now")
     def test_mixed_inline_connections_many_in_many_out(self):
         in1 = layers.Input(1)
         in2 = layers.Input(1)
@@ -175,11 +175,13 @@ class InlineConnectionsTestCase(BaseTestCase):
         out1 = layers.Sigmoid(10)
         out2 = layers.Sigmoid(20)
 
+        import ipdb; ipdb.set_trace()
+
         connection = in1 > out1 < in2 > hd > out2
 
         self.assertEqual(len(connection), 5)
         self.assertEqual(connection.input_shape, [(1,), (1,)])
-        self.assertEqual(connection.output_shape, [(10,), (20,)])
+        self.assertEqual(sorted(connection.output_shape), sorted([(10,), (20,)]))
 
     @unittest.skip("Not working right now")
     def test_inline_connections_after_exception(self):
