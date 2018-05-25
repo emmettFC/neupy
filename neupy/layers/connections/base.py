@@ -26,11 +26,11 @@ class InlineConnection(object):
 
     def compare(self, left, right):
         original_connection = self.connect(left, right)
-        self.events.append(('__gt__', left, right, original_connection))
+        self.events.append(('__gt__', original_connection))
 
         subgraph = LayerGraph()
-
         previous_operator = None
+
         for operation in reversed(self.events):
             operator = operation[0]
 
@@ -38,37 +38,22 @@ class InlineConnection(object):
                 break
 
             if operator == '__gt__':
-                _, left_operation, right_operation, prev_conn = operation
+                _, previous_connection = operation
+                subgraph = LayerGraph.merge(subgraph, previous_connection.graph)
 
-                if isinstance(left_operation, (list, tuple)):
-                    left_operation = ParallelConnection(left_operation)
-
-                if isinstance(right_operation, (list, tuple)):
-                    right_operation = ParallelConnection(right_operation)
-
-                subgraph = LayerGraph.merge(subgraph, prev_conn.graph)
-                # subgraph = LayerGraph.merge(subgraph, right_operation.graph.subgraph(
-                #     right_operation.input_layers,
-                #     right_operation.output_layers,
-                # ))
-
-                for left_layer in left_operation.output_layers:
-                    for right_layer in right_operation.input_layers:
+                for left_layer in previous_connection.left.output_layers:
+                    for right_layer in previous_connection.right.input_layers:
                         subgraph.connect_layers(left_layer, right_layer)
 
             previous_operator = operator
 
-        from neupy import layers
-        connection = LayerConnection(layers.Relu(), layers.Relu())
-        connection.full_graph = original_connection.full_graph
-        connection.graph = connection.full_graph.subgraph(
-            subgraph.input_layers,
-            subgraph.output_layers,
+        return GraphConnection(
+            full_graph=original_connection.full_graph,
+            graph=original_connection.full_graph.subgraph(
+                subgraph.input_layers,
+                subgraph.output_layers,
+            )
         )
-        connection.input_layers = subgraph.input_layers
-        connection.output_layers = subgraph.output_layers
-
-        return connection
 
     def __bool__(self):
         self.events.append(('__bool__', self))
@@ -710,3 +695,12 @@ class LayerConnection(BaseConnection):
                 preformat_layer_shape(self.output_shape))
 
         return ' > '.join([repr(layer) for layer in self])
+
+
+class GraphConnection(LayerConnection):
+    def __init__(self, graph, full_graph):
+        self.graph = graph
+        self.full_graph = full_graph
+
+        self.input_layers = graph.input_layers
+        self.output_layers = graph.output_layers

@@ -30,7 +30,7 @@ class ConnectionTypesTestCase(BaseTestCase):
         input_layer_2 = layers.Input(20)
         conn = [input_layer_1, input_layer_2] > layers.Concatenate()
 
-        self.assertEqual(conn.input_shape, [(10,), (20,)])
+        self.assertEqual(sorted(conn.input_shape), [(10,), (20,)])
 
     def test_connection_shape_multiple_outputs(self):
         conn = layers.Input(10) > [layers.Sigmoid(1), layers.Sigmoid(2)]

@@ -175,8 +175,6 @@ class InlineConnectionsTestCase(BaseTestCase):
         out1 = layers.Sigmoid(10)
         out2 = layers.Sigmoid(20)
 
-        import ipdb; ipdb.set_trace()
-
         connection = in1 > out1 < in2 > hd > out2
 
         self.assertEqual(len(connection), 5)
