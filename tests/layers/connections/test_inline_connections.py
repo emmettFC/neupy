@@ -143,7 +143,6 @@ class InlineConnectionsTestCase(BaseTestCase):
             list(connection_2),
             [input_layer_2, hidden_layer, output_layer])
 
-    # @unittest.skip("Not working right now. Feature disabled.")
     def test_mixed_inline_connections_many_in_one_out(self):
         input_layer_1 = layers.Input(1)
         input_layer_2 = layers.Input(1)
@@ -155,7 +154,6 @@ class InlineConnectionsTestCase(BaseTestCase):
         self.assertEqual(connection.input_shape, [(1,), (1,)])
         self.assertEqual(connection.output_shape, (5,))
 
-    # @unittest.skip("Not working right now. Feature disabled.")
     def test_mixed_inline_connections_one_in_many_out(self):
         input_layer = layers.Input(2)
         output_layer_1 = layers.Sigmoid(10)
@@ -167,7 +165,6 @@ class InlineConnectionsTestCase(BaseTestCase):
         self.assertEqual(connection.input_shape, (2,))
         self.assertEqual(sorted(connection.output_shape), sorted([(10,), (20,)]))
 
-    # @unittest.skip("Not working right now")
     def test_mixed_inline_connections_many_in_many_out(self):
         in1 = layers.Input(1)
         in2 = layers.Input(1)
@@ -180,6 +177,43 @@ class InlineConnectionsTestCase(BaseTestCase):
         self.assertEqual(len(connection), 5)
         self.assertEqual(connection.input_shape, [(1,), (1,)])
         self.assertEqual(sorted(connection.output_shape), sorted([(10,), (20,)]))
+
+    def test_mixed_inline_connections_many_in_one_out_v2(self):
+        in1 = layers.Input(2)
+        in2 = layers.Input(3)
+
+        hd11 = layers.Relu(5)
+        hd12 = layers.Relu(4)
+
+        hd21 = layers.Relu(7)
+        hd22 = layers.Relu(4)
+
+        out = layers.Elementwise()
+
+        connection = in1 > hd11 > hd12 > out < hd22 < hd21 < in2
+
+        self.assertEqual(len(connection), 7)
+        self.assertEqual(sorted(connection.input_shape), [(2,), (3,)])
+        self.assertEqual(connection.output_shape, (4,))
+
+    def test_mixed_inline_connections_many_to_many_with_lists(self):
+        in1 = layers.Input(2)
+        in2 = layers.Input(5)
+        in2 = layers.Input(7)
+
+        hd11 = layers.Relu(5)
+        hd12 = layers.Relu(4)
+        hd13 = layers.Relu(5)
+        hd2 = layers.Relu(5)
+
+        out1 = layers.Elementwise()
+        out2 = layers.Softmax(11)
+
+        connection = out2 < in1 > [hd11, hd12 > hd13] > out1 < [in2, hd2 < in3]
+
+        self.assertEqual(len(connection), 9)
+        self.assertEqual(sorted(connection.input_shape), [(2,), (5,), (7,)])
+        self.assertEqual(sorted(connection.output_shape), [(5,), (11,)])
 
     @unittest.skip("Not working right now")
     def test_inline_connections_after_exception(self):

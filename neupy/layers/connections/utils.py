@@ -38,7 +38,9 @@ def join(*connections):
 
         return connection
 
-    merged_connections = reduce(LayerConnection, connections)
+    merged_connections = reduce(
+        LayerConnection.between_connections, connections)
+
     return merged_connections
 
 

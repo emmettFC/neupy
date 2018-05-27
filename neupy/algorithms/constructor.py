@@ -62,7 +62,8 @@ def generate_layers(layers_sizes):
 
     for output_size in layers_sizes:
         next_layer = layers.Sigmoid(output_size)
-        connection = LayerConnection(connection, next_layer)
+        connection = LayerConnection.between_connections(
+            connection, next_layer)
 
     return connection
 

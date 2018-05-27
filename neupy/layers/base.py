@@ -124,6 +124,7 @@ class BaseLayer(BaseConnection, Configurable):
         self.input_shape_ = None
 
         self.graph.add_layer(self)
+        self.full_graph.add_layer(self)
 
         Configurable.__init__(self, **options)
 

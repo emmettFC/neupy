@@ -11,57 +11,7 @@ from .utils import join, is_sequential
 from .graph import LayerGraph
 
 
-__all__ = ('LayerConnection', 'BaseConnection', 'ParallelConnection',
-           'InlineConnection')
-
-
-class InlineConnection(object):
-    events = []
-
-    def __gt__(self, other):
-        return self.compare(self, other)
-
-    def __lt__(self, other):
-        return self.compare(other, self)
-
-    def compare(self, left, right):
-        original_connection = self.connect(left, right)
-        self.events.append(('__gt__', original_connection))
-
-        subgraph = LayerGraph()
-        previous_operator = None
-
-        for operation in reversed(self.events):
-            operator = operation[0]
-
-            if operator == previous_operator:
-                break
-
-            if operator == '__gt__':
-                _, previous_connection = operation
-                subgraph = LayerGraph.merge(subgraph, previous_connection.graph)
-
-                for left_layer in previous_connection.left.output_layers:
-                    for right_layer in previous_connection.right.input_layers:
-                        subgraph.connect_layers(left_layer, right_layer)
-
-            previous_operator = operator
-
-        return GraphConnection(
-            full_graph=original_connection.full_graph,
-            graph=original_connection.full_graph.subgraph(
-                subgraph.input_layers,
-                subgraph.output_layers,
-            )
-        )
-
-    def __bool__(self):
-        self.events.append(('__bool__', self))
-        return True
-
-    def __nonzero__(self):
-        # Hack for python 2
-        return self.__bool__()
+__all__ = ('BaseConnection', 'LayerConnection', 'ParallelConnection')
 
 
 def create_input_variables(input_layers):
@@ -115,11 +65,51 @@ def clean_layer_references(graph, layer_references):
             layer_reference = graph.find_layer_by_name(layer_reference)
 
         layers.append(layer_reference)
-
     return layers
 
 
-class BaseConnection(InlineConnection):
+def topological_sort(graph):
+    """
+    Repeatedly go through all of the nodes in the graph, moving each of
+    the nodes that has all its edges resolved, onto a sequence that
+    forms our sorted graph. A node has all of its edges resolved and
+    can be moved once all the nodes its edges point to, have been moved
+    from the unsorted graph onto the sorted one.
+
+    Parameters
+    ----------
+    graph : dict
+    Dictionary that has graph structure.
+
+    Raises
+    ------
+    RuntimeError
+    If graph has cycles.
+
+    Returns
+    -------
+    list
+    List of nodes sorted in topological order.
+    """
+    sorted_nodes = []
+    graph_unsorted = graph.copy()
+
+    while graph_unsorted:
+        acyclic = False
+
+        for node, edges in list(graph_unsorted.items()):
+            if all(edge not in graph_unsorted for edge in edges):
+                acyclic = True
+                del graph_unsorted[node]
+                sorted_nodes.append(node)
+
+        if not acyclic:
+            raise RuntimeError("A cyclic dependency occurred")
+
+    return sorted_nodes
+
+
+class BaseConnection(object):
     """
     Base class from chain connections.
 
@@ -138,6 +128,9 @@ class BaseConnection(InlineConnection):
     output_layers : list of layers
         List of connection's output layers.
     """
+    events = []
+    full_graph = LayerGraph()
+
     def __init__(self):
         self.training_state = True
         self.look_inside = 0
@@ -146,20 +139,60 @@ class BaseConnection(InlineConnection):
         self.input_layers = [self]
         self.output_layers = [self]
 
-    def connect(self, left, right):
-        """
-        Make connection between two objects.
-        """
-        return LayerConnection(left, right)
+    def __gt__(self, other):
+        return self.connect(self, other)
+
+    def __lt__(self, other):
+        return self.connect(other, self)
+
+    def __bool__(self):
+        self.events.append(('__bool__', self))
+        return True
+
+    def __nonzero__(self):
+        return self.__bool__()  # hack for python 2
 
     def __rshift__(self, other):
-        return super(BaseConnection, self).__gt__(other)
+        return self.connect(self, other)
 
     def __lshift__(self, other):
-        return super(BaseConnection, self).__lt__(other)
+        return self.connect(other, self)
 
     def __iter__(self):
         yield self
+
+    def connect(self, left, right):
+        original_connection = LayerConnection.between_connections(left, right)
+        self.events.append(('__gt__', original_connection))
+
+        subgraph = LayerGraph()
+        previous_operator = None
+
+        for operation in reversed(self.events):
+            operator = operation[0]
+
+            if operator == previous_operator:
+                break
+
+            if operator == '__gt__':
+                _, connection = operation
+                subgraph = LayerGraph.merge(subgraph, connection.graph)
+
+                for left_layer in connection.left.output_layers:
+                    for right_layer in connection.right.input_layers:
+                        subgraph.connect_layers(left_layer, right_layer)
+
+            previous_operator = operator
+
+        try:
+            return LayerConnection(
+                graph=self.full_graph.subgraph(
+                    subgraph.input_layers,
+                    subgraph.output_layers,
+                )
+            )
+        except:
+            import ipdb; ipdb.set_trace()
 
     def output(self, input_value):
         """
@@ -198,70 +231,6 @@ class BaseConnection(InlineConnection):
 
         with self.disable_training_state():
             return theano.function(inputs, self.output(*inputs))
-
-
-def make_common_graph(left_layer, right_layer):
-    """
-    Makes common graph for two layers that exists
-    in different graphs.
-
-    Parameters
-    ----------
-    left_layer : layer
-    right_layer : layer
-
-    Returns
-    -------
-    LayerGraph instance
-        Graph that contains both layers and their connections.
-    """
-    graph = LayerGraph.merge(left_layer.graph, right_layer.graph)
-
-    for layer in graph.forward_graph.keys():
-        layer.graph = graph
-
-    return graph
-
-
-def topological_sort(graph):
-    """
-    Repeatedly go through all of the nodes in the graph, moving each of
-    the nodes that has all its edges resolved, onto a sequence that
-    forms our sorted graph. A node has all of its edges resolved and
-    can be moved once all the nodes its edges point to, have been moved
-    from the unsorted graph onto the sorted one.
-
-    Parameters
-    ----------
-    graph : dict
-        Dictionary that has graph structure.
-
-    Raises
-    ------
-    RuntimeError
-        If graph has cycles.
-
-    Returns
-    -------
-    list
-        List of nodes sorted in topological order.
-    """
-    sorted_nodes = []
-    graph_unsorted = graph.copy()
-
-    while graph_unsorted:
-        acyclic = False
-
-        for node, edges in list(graph_unsorted.items()):
-            if all(edge not in graph_unsorted for edge in edges):
-                acyclic = True
-                del graph_unsorted[node]
-                sorted_nodes.append(node)
-
-        if not acyclic:
-            raise RuntimeError("A cyclic dependency occurred")
-
-    return sorted_nodes
 
 
 class ParallelConnection(BaseConnection):
@@ -431,11 +400,14 @@ class LayerConnection(BaseConnection):
         Graph that stores relations between layer
         in the network.
     """
-    def __init__(self, left, right):
-        super(LayerConnection, self).__init__()
+    def __init__(self, graph):
+        self.graph = graph
+        self.input_layers = graph.input_layers
+        self.output_layers = graph.output_layers
 
-        self.left_raw = left
-        self.right_raw = right
+    @classmethod
+    def between_connections(cls, left, right):
+        left_raw, right_raw = left, right
 
         if isinstance(left, (list, tuple)):
             left = ParallelConnection(left)
@@ -443,22 +415,22 @@ class LayerConnection(BaseConnection):
         if isinstance(right, (list, tuple)):
             right = ParallelConnection(right)
 
-        self.left = left
-        self.right = right
+        cls.full_graph.connect_layers(left.output_layers, right.input_layers)
+        connection = cls(
+            # Generates subgraph that contains only connections
+            # between specified input and output layers
+            graph=cls.full_graph.subgraph(
+                left.input_layers,
+                right.output_layers
+            ),
+        )
 
-        layers = product(left.output_layers, right.input_layers)
-        for left_output, right_input in layers:
-            self.full_graph = make_common_graph(left_output, right_input)
+        connection.left = left
+        connection.left_raw = left_raw
+        connection.right = right
+        connection.right_raw = right_raw
 
-        self.full_graph.connect_layers(left.output_layers, right.input_layers)
-
-        self.input_layers = self.left.input_layers
-        self.output_layers = self.right.output_layers
-
-        # Generates subgraph that contains only connections
-        # between specified input and output layers
-        self.graph = self.full_graph.subgraph(
-            self.input_layers, self.output_layers)
+        return connection
 
     @property
     def input_shape(self):
@@ -695,12 +667,3 @@ class LayerConnection(BaseConnection):
                 preformat_layer_shape(self.output_shape))
 
         return ' > '.join([repr(layer) for layer in self])
-
-
-class GraphConnection(LayerConnection):
-    def __init__(self, graph, full_graph):
-        self.graph = graph
-        self.full_graph = full_graph
-
-        self.input_layers = graph.input_layers
-        self.output_layers = graph.output_layers
