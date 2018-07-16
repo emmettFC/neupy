@@ -14,6 +14,9 @@ from .graph import LayerGraph
 __all__ = ('BaseConnection', 'LayerConnection', 'ParallelConnection')
 
 
+GLOBAL_GRAPH = LayerGraph()
+
+
 def create_input_variables(input_layers):
     """
     Create input variables for each input layer
@@ -109,6 +112,14 @@ def topological_sort(graph):
     return sorted_nodes
 
 
+class classproperty(object):
+    def __init__(self, fget):
+        self.fget = fget
+
+    def __get__(self, owner_self, owner_cls):
+        return self.fget(owner_cls)
+
+
 class BaseConnection(object):
     """
     Base class from chain connections.
@@ -129,7 +140,10 @@ class BaseConnection(object):
         List of connection's output layers.
     """
     events = []
-    full_graph = LayerGraph()
+
+    @classproperty
+    def full_graph(self):
+        return GLOBAL_GRAPH
 
     def __init__(self):
         self.training_state = True
@@ -184,15 +198,12 @@ class BaseConnection(object):
 
             previous_operator = operator
 
-        try:
-            return LayerConnection(
-                graph=self.full_graph.subgraph(
-                    subgraph.input_layers,
-                    subgraph.output_layers,
-                )
+        return LayerConnection(
+            graph=self.full_graph.subgraph(
+                subgraph.input_layers,
+                subgraph.output_layers,
             )
-        except:
-            import ipdb; ipdb.set_trace()
+        )
 
     def output(self, input_value):
         """

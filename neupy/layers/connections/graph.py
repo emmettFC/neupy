@@ -369,12 +369,16 @@ class LayerGraph(object):
                 next_inp_shape = next_layer.input_shape
                 current_out_shape = current_layer.output_shape
                 expect_one_input = does_layer_expect_one_input(next_layer)
+                dependencies = self.backward_graph[next_layer]
+
+                fulfilled_dependencies = all(
+                    layer.output_shape for layer in dependencies)
 
                 if not next_inp_shape and expect_one_input:
                     next_layer.input_shape = current_out_shape
                     next_layer.initialize()
 
-                elif not expect_one_input and all_inputs_has_shape:
+                elif not expect_one_input and fulfilled_dependencies:
                     input_shapes = []
                     for incoming_layer in self.backward_graph[next_layer]:
                         input_shapes.append(incoming_layer.output_shape)

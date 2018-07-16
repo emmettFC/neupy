@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 from sklearn import datasets, preprocessing, model_selection
 
@@ -67,7 +69,6 @@ class MixtureOfExpertsTestCase(BaseTestCase):
                 gating_layer=layers.Softmax(10))
 
     def test_mixture_of_experts_multi_class_classification(self):
-        import copy
         insize, outsize = (10, 3)
         n_epochs = 10
 
@@ -77,10 +78,11 @@ class MixtureOfExpertsTestCase(BaseTestCase):
             error='categorical_crossentropy',
             verbose=False)
 
-        architecture = layers.join(
-            layers.Input(insize),
-            layers.Relu(20),
-            layers.Softmax(outsize))
+        def create_architecture():
+            return layers.join(
+                layers.Input(insize),
+                layers.Relu(20),
+                layers.Softmax(outsize))
 
         data, target = datasets.make_classification(
             n_samples=200,
@@ -102,7 +104,7 @@ class MixtureOfExpertsTestCase(BaseTestCase):
         # -------------- Train single GradientDescent -------------- #
 
         bpnet = algorithms.Momentum(
-            copy.deepcopy(architecture),
+            create_architecture(),
             **default_configs
         )
 
@@ -115,9 +117,9 @@ class MixtureOfExpertsTestCase(BaseTestCase):
 
         moe = algorithms.Momentum(
             architectures.mixture_of_experts([
-                copy.deepcopy(architecture),
-                copy.deepcopy(architecture),
-                copy.deepcopy(architecture),
+                create_architecture(),
+                create_architecture(),
+                create_architecture(),
             ]),
             **default_configs
         )

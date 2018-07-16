@@ -27,19 +27,23 @@ def generate_layer_name(layer):
     -------
     str
     """
-    cls = layer.__class__
+    classname = layer.__class__.__name__
+    layer_name = re.sub(r'(?<!^)(?=[A-Z][a-z_])', '-', classname)
+    layer_name = layer_name.lower()
 
-    layer_id = cls.global_identifiers_map[cls]
-    cls.global_identifiers_map[cls] += 1
+    last_layer_id = 0
+    for existed_layer in layer.full_graph.forward_graph:
+        if existed_layer.name.startswith(layer_name + '-'):
+            suffix = existed_layer.name[len(layer_name) + 1:]
 
-    classname = cls.__name__
+            if suffix.isdigit():
+                suffix = int(suffix)
 
-    if classname.isupper():
-        layer_name = classname.lower()
-    else:
-        layer_name = re.sub(r'(?<!^)(?=[A-Z][a-z_])', '-', classname)
+                if suffix > last_layer_id:
+                    last_layer_id = suffix
 
-    return "{}-{}".format(layer_name.lower(), layer_id)
+    layer_id = last_layer_id + 1
+    return "{}-{}".format(layer_name, layer_id)
 
 
 def create_shared_parameter(value, name, shape):
@@ -105,23 +109,17 @@ class BaseLayer(BaseConnection, Configurable):
     graph : LayerGraph instance
         Graphs that stores all relations between layers.
     """
-    name = Property(expected_type=six.string_types)
-
-    # Stores global identifier index for each layer class
-    global_identifiers_map = {}
-
-    def __new__(cls, *args, **kwargs):
-        if cls not in cls.global_identifiers_map:
-            cls.global_identifiers_map[cls] = 1
-        return super(BaseLayer, cls).__new__(cls)
+    name = Property(default=None, expected_type=(six.string_types, None))
 
     def __init__(self, *args, **options):
         super(BaseLayer, self).__init__(*args)
 
         self.updates = []
         self.parameters = OrderedDict()
-        self.name = generate_layer_name(layer=self)
         self.input_shape_ = None
+
+        if self.name is None:
+            self.name = generate_layer_name(layer=self)
 
         self.graph.add_layer(self)
         self.full_graph.add_layer(self)
@@ -169,6 +167,16 @@ class BaseLayer(BaseConnection, Configurable):
     def __repr__(self):
         classname = self.__class__.__name__
         return '{name}()'.format(name=classname)
+
+    def __setstate__(self, state):
+        graph = self.full_graph.forward_graph
+        name = state.get('name')
+
+        if any(layer.name == name for layer in graph):
+            state['name'] = generate_layer_name(layer=self)
+            state['graph'].add_layer(self)
+            self.full_graph.add_layer(self)
+        self.__dict__.update(state)
 
 
 class ResidualConnection(BaseLayer):

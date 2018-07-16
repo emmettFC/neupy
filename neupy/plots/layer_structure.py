@@ -8,7 +8,7 @@ from neupy.layers.base import ResidualConnection
 from neupy.layers.utils import extract_connection
 
 
-__all__ = ('layer_structure',)
+__all__ = ('layer_structure', 'visualize_graph')
 
 
 def layer_uid(layer):
@@ -93,6 +93,60 @@ def exclude_layer_from_graph(graph, ignore_layers):
     return cleaned_graph
 
 
+def visualize_graph(graph, ignore_layers=None, filepath=None, show=True):
+    """
+    Draw graphical representation of the graph connection
+    structure in form of directional graph.
+
+    Parameters
+    ----------
+    graph : LayerGraph instance
+
+    ignore_layers : list or None
+        List of layer types that needs to be excluded
+        from the plot. Defaults to ``None``.
+
+    filepath : str or None
+        Path to the file that stores graph. ``None`` means
+        that file will be saved in temporary file.
+        Defaults to ``None``.
+
+    show : bool
+        ``True`` opens PDF file. Defaults to ``True``.
+    """
+    forward_graph = graph.forward_graph
+
+    if ignore_layers is None:
+        ignore_layers = []
+
+    if filepath is None:
+        filepath = tempfile.mktemp()
+
+    ignore_layers = [ResidualConnection] + ignore_layers
+    forward_graph = exclude_layer_from_graph(forward_graph, ignore_layers)
+    digraph = graphviz.Digraph()
+
+    for layer in forward_graph.keys():
+        digraph.node(layer_uid(layer), str(layer))
+
+    output_id = 1
+    for from_layer, to_layers in forward_graph.items():
+        for to_layer in to_layers:
+            digraph.edge(layer_uid(from_layer), layer_uid(to_layer),
+                         label=format_label(from_layer.output_shape))
+
+        if not to_layers:
+            output = 'output-{}'.format(output_id)
+
+            digraph.node(output, 'Output #{}'.format(output_id))
+            digraph.edge(layer_uid(from_layer), output,
+                         label=" {}".format(from_layer.output_shape))
+
+            output_id += 1
+
+    digraph.render(filepath, view=show)
+
+
 def layer_structure(connection, ignore_layers=None, filepath=None, show=True):
     """
     Draw graphical representation of the layer connection
@@ -122,36 +176,4 @@ def layer_structure(connection, ignore_layers=None, filepath=None, show=True):
     >>> plots.layer_structure(connection)
     """
     connection = extract_connection(connection)
-
-    if ignore_layers is None:
-        ignore_layers = []
-
-    if filepath is None:
-        filepath = tempfile.mktemp()
-
-    ignore_layers = [ResidualConnection] + ignore_layers
-
-    forward_graph = connection.graph.forward_graph
-    forward_graph = exclude_layer_from_graph(forward_graph, ignore_layers)
-
-    digraph = graphviz.Digraph()
-
-    for layer in forward_graph.keys():
-        digraph.node(layer_uid(layer), str(layer))
-
-    output_id = 1
-    for from_layer, to_layers in forward_graph.items():
-        for to_layer in to_layers:
-            digraph.edge(layer_uid(from_layer), layer_uid(to_layer),
-                         label=format_label(from_layer.output_shape))
-
-        if not to_layers:
-            output = 'output-{}'.format(output_id)
-
-            digraph.node(output, 'Output #{}'.format(output_id))
-            digraph.edge(layer_uid(from_layer), output,
-                         label=" {}".format(from_layer.output_shape))
-
-            output_id += 1
-
-    digraph.render(filepath, view=show)
+    visualize_graph(connection.graph)
