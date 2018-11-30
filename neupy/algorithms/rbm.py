@@ -150,7 +150,7 @@ class RBM(BaseAlgorithm, BaseNetwork, MinibatchTrainingMixin, DumpableObject):
             self.weight = create_shared_parameter(
                 value=self.weight,
                 name='weight',
-                shape=(self.n_visible, self.n_hidden)
+                shape=(self.n_visible, self.n_hidden),
             )
             self.hidden_bias = create_shared_parameter(
                 value=self.hidden_bias,

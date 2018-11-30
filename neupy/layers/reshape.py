@@ -68,6 +68,9 @@ class Reshape(BaseLayer):
 
     @property
     def output_shape(self):
+        if self.input_shape is None:
+            return
+
         if -1 not in self.shape:
             return as_tuple(self.shape)
 

@@ -42,7 +42,7 @@ def generate_layer_name(layer):
     return "{}-{}".format(layer_name.lower(), layer_id)
 
 
-def create_shared_parameter(value, name, shape):
+def create_shared_parameter(value, name, shape, trainable=True):
     """
     Creates NN parameter as Tensorfow variable.
 
@@ -57,6 +57,9 @@ def create_shared_parameter(value, name, shape):
     shape : tuple
         Parameter's shape.
 
+    trainable : bool
+        Defaults to ``True``.
+
     Returns
     -------
     Tensorfow variable.
@@ -67,7 +70,12 @@ def create_shared_parameter(value, name, shape):
     if isinstance(value, init.Initializer):
         value = value.sample(shape)
 
-    return tf.Variable(asfloat(value), name=name, dtype=tf.float32)
+    return tf.Variable(
+        asfloat(value),
+        trainable=trainable,
+        dtype=tf.float32,
+        name=name,
+    )
 
 
 def initialize_layer(layer_class, kwargs, was_initialized):
@@ -132,16 +140,27 @@ class BaseLayer(BaseConnection, Configurable):
     def __init__(self, *args, **options):
         super(BaseLayer, self).__init__(*args)
 
-        self.output = types.MethodType(
-            class_method_name_scope(self.output), self)
+        # self.output = types.MethodType(
+        #     class_method_name_scope(self.output), self)
 
         self.updates = []
+        self.initializing = False
         self.parameters = OrderedDict()
         self.name = generate_layer_name(layer=self)
         self.input_shape_ = None
 
         self.graph.add_layer(self)
         Configurable.__init__(self, **options)
+
+    def __getattribute__(self, name):
+        lazy_parameters = ['parameters']
+
+        if not self.initialized:
+            if name in lazy_parameters and not self.initializing:
+                self.initializing = True
+                self.initialize()
+                self.initializing = False
+        return super(BaseLayer, self).__getattribute__(name)
 
     def validate(self, input_shape):
         """
@@ -173,11 +192,10 @@ class BaseLayer(BaseConnection, Configurable):
             layer_name=self.name,
             parameter_name=name.replace('_', '-'))
 
-        parameter = create_shared_parameter(value, layer_name, shape)
-        parameter.is_trainable = trainable
+        parameter = create_shared_parameter(
+            value, layer_name, shape, trainable)
 
         self.parameters[name] = parameter
-
         setattr(self, name, parameter)
         return parameter
 
@@ -249,11 +267,11 @@ class ParameterBasedLayer(BaseLayer):
         super(ParameterBasedLayer, self).initialize()
 
         self.add_parameter(value=self.weight, name='weight',
-                           shape=self.weight_shape, trainable=True)
+                           shape=self.weight_shape)
 
         if self.bias is not None:
             self.add_parameter(value=self.bias, name='bias',
-                               shape=self.bias_shape, trainable=True)
+                               shape=self.bias_shape)
 
     def __repr__(self):
         classname = self.__class__.__name__

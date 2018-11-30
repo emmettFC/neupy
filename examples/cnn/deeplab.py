@@ -57,4 +57,4 @@ deeplab = join(
     Convolution((1, 1, 21), padding='same'),
     ResizeBilinear(resnet50.input_shape[:2]),
 )
-plots.layer_structure(deeplab)
+# plots.layer_structure(deeplab)

@@ -95,8 +95,7 @@ class Embedding(BaseLayer):
         super(Embedding, self).initialize()
         self.add_parameter(
             value=self.weight, name='weight',
-            shape=as_tuple(self.input_size, self.output_size),
-            trainable=True)
+            shape=as_tuple(self.input_size, self.output_size))
 
     def output(self, input_value):
         input_value = tf.cast(input_value, tf.int32)

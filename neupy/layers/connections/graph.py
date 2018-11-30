@@ -375,7 +375,7 @@ class LayerGraph(object):
 
                 if not next_inp_shape and expect_one_input:
                     next_layer.input_shape = current_out_shape
-                    next_layer.initialize()
+                    # next_layer.initialize()
 
                 elif not expect_one_input and all_inputs_has_shape:
                     input_shapes = []
@@ -384,7 +384,7 @@ class LayerGraph(object):
 
                     if None not in input_shapes:
                         next_layer.input_shape = input_shapes
-                        next_layer.initialize()
+                        # next_layer.initialize()
 
                     else:
                         # Some of the previous layers still don't

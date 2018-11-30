@@ -245,6 +245,8 @@ def load_dict(connection, data, ignore_missing=False,
             "".format(load_by))
 
     validate_data_structure(data)
+
+    connection.initialize()
     initialize_uninitialized_variables()
     connection = extract_connection(connection)
 
@@ -312,6 +314,8 @@ def save_dict(connection):
     """
     connection = extract_connection(connection)
     session = tensorflow_session()
+
+    connection.initialize()
     initialize_uninitialized_variables()
 
     data = {
@@ -336,7 +340,7 @@ def save_dict(connection):
         for attrname, parameter in layer.parameters.items():
             parameters[attrname] = {
                 'value': asfloat(session.run(parameter)),
-                'trainable': parameter.is_trainable,
+                'trainable': parameter.trainable,
             }
 
         for option_name in layer.options:

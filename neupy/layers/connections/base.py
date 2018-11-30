@@ -51,9 +51,19 @@ def clean_layer_references(graph, layer_references):
 def check_initialization(method):
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        result = method(*args, **kwargs)
-        self.initialized = True
-        return result
+        if not self.initialized:
+            method(*args, **kwargs)
+            self.initialized = True
+    return wrapper
+
+def lazy_initialization(method):
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        self.initialize()
+        value = method(*args, **kwargs)
+        return value
+
+    wrapper.original_method = method
     return wrapper
 
 
@@ -83,6 +93,10 @@ class BaseConnection(InlineConnection):
         # initialized. It will work even if method was reinitialized
         self.initialize = types.MethodType(
             check_initialization(self.initialize), self)
+
+        self.original_output = self.output
+        self.output = types.MethodType(
+            lazy_initialization(self.output), self)
 
         self.training_state = True
         self.look_inside = 0
@@ -538,6 +552,15 @@ class LayerConnection(BaseConnection):
         subgraph = self.graph.subgraph_for_input(input_layers)
 
         new_connection = copy.copy(self)
+
+        new_connection.original_output = types.MethodType(
+            new_connection.original_output.__func__,
+            new_connection)
+
+        new_connection.output = types.MethodType(
+            lazy_initialization(new_connection.original_output),
+            new_connection)
+
         new_connection.graph = subgraph
         new_connection.input_layers = subgraph.input_layers
 
@@ -575,6 +598,15 @@ class LayerConnection(BaseConnection):
         subgraph = self.graph.subgraph_for_output(output_layers)
 
         new_connection = copy.copy(self)
+
+        new_connection.original_output = types.MethodType(
+            new_connection.original_output.__func__,
+            new_connection)
+
+        new_connection.output = types.MethodType(
+            lazy_initialization(new_connection.original_output),
+            new_connection)
+
         new_connection.graph = subgraph
         new_connection.output_layers = subgraph.output_layers
 

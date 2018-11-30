@@ -345,12 +345,7 @@ class PRelu(ActivationLayer):
         output_shape = as_tuple(None, self.output_shape)
 
         alpha_shape = [output_shape[axis] for axis in self.alpha_axes]
-        self.add_parameter(
-            value=self.alpha,
-            name='alpha',
-            shape=alpha_shape,
-            trainable=True,
-        )
+        self.add_parameter(value=self.alpha, name='alpha', shape=alpha_shape)
 
     def activation_function(self, input_value):
         input_value = tf.convert_to_tensor(input_value, dtype=tf.float32)

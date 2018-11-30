@@ -329,11 +329,21 @@ class ParameterProperty(ArrayProperty):
         tf.Variable,
         tf.Tensor,
     )
+    def __init__(self, *args, **kwargs):
+        self.initializing = False
+        super(ParameterProperty, self).__init__(*args, **kwargs)
 
     def __set__(self, instance, value):
         if isinstance(value, number_type):
             value = init.Constant(value)
         super(ParameterProperty, self).__set__(instance, value)
+
+    def __get__(self, instance, owner):
+        if not self.initializing and hasattr(instance, 'initialize'):
+            self.initializing = True
+            instance.initialize()
+            self.initializing = False
+        return super(ParameterProperty, self).__get__(instance, owner)
 
 
 class CallableProperty(Property):

@@ -72,8 +72,7 @@ class ConfigMeta(SharedDocsMeta):
             new_class.options = {}
 
         for base_class in parents:
-            new_class.options = dict(base_class.options,
-                                     **new_class.options)
+            new_class.options = dict(base_class.options, **new_class.options)
 
         options = new_class.options
 
