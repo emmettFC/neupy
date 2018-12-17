@@ -28,15 +28,16 @@
         <script>window.jQuery || document.write('<script src="../../_static/vendor/jquery-1.8.2.min.js"><\/script>')</script>
         <script src="../../_static/plugins.js"></script>
         <script src="../../_static/main.js"></script>
-        <link rel="next" title="Debug layer connections" href="debug.html" /><link rel="prev" title="Create custom layers" href="create-custom-layers.html" /><link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.html" /><script type="text/javascript">
+        <link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Debug layer connections" href="debug.html" /><link rel="prev" title="Create custom layers" href="create-custom-layers.html" /><link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.html" /><script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5',
+        VERSION:     '1.7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
-    </script><script type="text/javascript" src="../../_static/underscore.js"></script><script type="text/javascript" src="../../_static/doctools.js"></script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript" src="../../_static/disqus.js"></script><script type="text/javascript" src="../../_static/js/google_analytics.js"></script><script type="text/javascript" src="../../_static/js/script.js"></script><script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    </script><script type="text/javascript" src="../../_static/underscore.js"></script><script type="text/javascript" src="../../_static/doctools.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript" src="../../_static/disqus.js"></script><script type="text/javascript" src="../../_static/js/google_analytics.js"></script><script type="text/javascript" src="../../_static/js/script.js"></script><script type="text/javascript" src="../../_static/js/copybutton.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -51,10 +52,16 @@
         img { max-width: 800px !important; }
         img[src="../_images/mnist-code-sample-home.png"] { max-width: 600px !important; }
         table { background-color: white; }
+        table.docutils.citation  { background-color: inherit; }
         div.highlight { margin-bottom: 20px !important; }
 
         .limited-width { max-width: 800px; margin: auto; }
         .docutils { width: 100%; }
+        a .docutils.literal {
+            background-color: inherit !important;
+            padding: 0px !important;
+            color: #3bbc46 !important;
+        }
         .docutils td { padding: 10px; }
         .section { word-wrap:break-word; }
         .descname { font-weight: bold; }
@@ -229,7 +236,7 @@
     <div class="section" id="parameter-initialization-methods">
 <h1>Parameter Initialization Methods</h1>
 <p>We can set up different initialization method for layer parameters.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neupy</span> <span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">init</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neupy</span> <span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">init</span>
 
 <span class="n">gdnet</span> <span class="o">=</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">GradientDescent</span><span class="p">(</span>
     <span class="p">[</span>
@@ -240,9 +247,9 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Initialization class has an ability to generate parameters based on the specified shape. For instance, a first sigmoid layer has 10 inputs and 30 outputs which mean that this layer should have weight with shape <span class="docutils literal"><span class="pre">(10,</span> <span class="pre">30)</span></span>. During initialization, we don&#8217;t need to specify the shape of the parameter. This information would be provided to the Initializer class during layer initialization step.</p>
-<p>It&#8217;s possible to set up any value for the weight as long as it has valid shape. Let&#8217;s do the same initialization procedure with manually generated weights.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<p>Initialization class has an ability to generate parameters based on the specified shape. For instance, a first sigmoid layer has 10 inputs and 30 outputs which mean that this layer should have weight with shape <span class="docutils literal"><span class="pre">(10,</span> <span class="pre">30)</span></span>. During initialization, we don’t need to specify the shape of the parameter. This information would be provided to the Initializer class during layer initialization step.</p>
+<p>It’s possible to set up any value for the weight as long as it has valid shape. Let’s do the same initialization procedure with manually generated weights.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">neupy</span> <span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">algorithms</span>
 
 <span class="n">gdnet</span> <span class="o">=</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">GradientDescent</span><span class="p">(</span>
@@ -255,16 +262,16 @@
 </pre></div>
 </div>
 <p>Code above does the same type of the initialization as in the previous example, the only problem that we need to hard-code expected shape of the weights.</p>
-<p>More initialization methods you can find <a class="reference internal" href="../../pages/cheatsheet.html#init-methods"><span>here</span></a>.</p>
+<p>More initialization methods you can find <a class="reference internal" href="../../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.</p>
 <div class="section" id="create-custom-initialization-methods">
 <h2>Create custom initialization methods</h2>
-<p>It&#8217;s very easy to create custom initialization method. All we need is just to inherit from the <span class="docutils literal"><span class="pre">init.Initializer</span></span> class and define <span class="docutils literal"><span class="pre">sample</span></span> method that accepts one argument (excluding the <span class="docutils literal"><span class="pre">self</span></span> argument). Argument will contain shape of the output tensor that we expect to get.</p>
+<p>It’s very easy to create custom initialization method. All we need is just to inherit from the <span class="docutils literal"><span class="pre">init.Initializer</span></span> class and define <span class="docutils literal"><span class="pre">sample</span></span> method that accepts one argument (excluding the <span class="docutils literal"><span class="pre">self</span></span> argument). Argument will contain shape of the output tensor that we expect to get.</p>
 <p>In the example below we create custom initializer that samples weights from the exponential distribution.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">neupy</span> <span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">init</span>
 
 <span class="k">class</span> <span class="nc">Exponential</span><span class="p">(</span><span class="n">init</span><span class="o">.</span><span class="n">Initializer</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
 
     <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
@@ -283,7 +290,7 @@
 <div class="section" id="share-parameters-between-layers">
 <h2>Share parameters between layers</h2>
 <p>In some applications it might be useful to share parameters from other layers. In the example below, we initialize two hidden layers and each layer has exactly the same weight and bias.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy</span> <span class="kn">import</span> <span class="n">layers</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy</span> <span class="kn">import</span> <span class="n">layers</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hidden_layer_1</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Relu</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">hidden_layer_1</span>
@@ -297,17 +304,17 @@
 </pre></div>
 </div>
 <p>It works in the following way. First, we connected input layer to the hidden layer. This operation triggered parameter initialization for the first hidden layer.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hidden_layer_1</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Relu</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hidden_layer_1</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Relu</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">hidden_layer_1</span>
 </pre></div>
 </div>
 <p>Next, we associated parameters from the first hidden layer with parameters in the second layer.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hidden_layer_2</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Relu</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">hidden_layer_1</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hidden_layer_2</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Relu</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">hidden_layer_1</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span>
 <span class="gp">... </span>                             <span class="n">bias</span><span class="o">=</span><span class="n">hidden_layer_1</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Notice that in this case weight and bias are instance of the <span class="docutils literal"><span class="pre">Variable</span></span> class from the Tensorflow.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hidden_layer_1</span><span class="o">.</span><span class="n">weight</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hidden_layer_1</span><span class="o">.</span><span class="n">weight</span>
 <span class="go">&lt;tf.Variable &#39;layer/relu-1/weight:0&#39; shape=(10, 10) dtype=float32_ref&gt;</span>
 </pre></div>
 </div>

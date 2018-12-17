@@ -28,15 +28,16 @@
         <script>window.jQuery || document.write('<script src="../_static/vendor/jquery-1.8.2.min.js"><\/script>')</script>
         <script src="../_static/plugins.js"></script>
         <script src="../_static/main.js"></script>
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.html" /><script type="text/javascript">
+        <link rel="search" title="Search" href="../search.html" /><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.html" /><script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5',
+        VERSION:     '1.7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
-    </script><script type="text/javascript" src="../_static/underscore.js"></script><script type="text/javascript" src="../_static/doctools.js"></script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript" src="../_static/disqus.js"></script><script type="text/javascript" src="../_static/js/google_analytics.js"></script><script type="text/javascript" src="../_static/js/script.js"></script><script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    </script><script type="text/javascript" src="../_static/underscore.js"></script><script type="text/javascript" src="../_static/doctools.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript" src="../_static/disqus.js"></script><script type="text/javascript" src="../_static/js/google_analytics.js"></script><script type="text/javascript" src="../_static/js/script.js"></script><script type="text/javascript" src="../_static/js/copybutton.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -51,10 +52,16 @@
         img { max-width: 800px !important; }
         img[src="../_images/mnist-code-sample-home.png"] { max-width: 600px !important; }
         table { background-color: white; }
+        table.docutils.citation  { background-color: inherit; }
         div.highlight { margin-bottom: 20px !important; }
 
         .limited-width { max-width: 800px; margin: auto; }
         .docutils { width: 100%; }
+        a .docutils.literal {
+            background-color: inherit !important;
+            padding: 0px !important;
+            color: #3bbc46 !important;
+        }
         .docutils td { padding: 10px; }
         .section { word-wrap:break-word; }
         .descname { font-weight: bold; }
@@ -233,28 +240,32 @@
 <em class="property">class </em><span class="descclassname">neupy.algorithms.step_update.step_decay.</span><span class="descname">StepDecay</span><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/algorithms/step_update/step_decay.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Algorithm minimizes learning step monotonically after
 each iteration.</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\alpha_{t + 1} = \frac{\alpha_{0}}            {1 + \frac{t}{m}}\]</div>
-<p>where <span class="math">\(\alpha\)</span> is a step, <span class="math">\(t\)</span> is an epoch number
-and <span class="math">\(m\)</span> is a <span class="docutils literal"><span class="pre">reduction_freq</span></span> parameter.</p>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a step, <span class="math notranslate nohighlight">\(t\)</span> is an epoch number
+and <span class="math notranslate nohighlight">\(m\)</span> is a <span class="docutils literal"><span class="pre">reduction_freq</span></span> parameter.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>reduction_freq</strong> : int</p>
-<blockquote>
-<div><p>Parameter controls step redution frequency. The larger the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>reduction_freq</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first">Parameter controls step redution frequency. The larger the
 value the slower step parameter decreases.</p>
 <p>For instance, if <span class="docutils literal"><span class="pre">reduction_freq=100</span></span>
 and <span class="docutils literal"><span class="pre">step=0.12</span></span> then after <span class="docutils literal"><span class="pre">100</span></span> epochs <span class="docutils literal"><span class="pre">step</span></span> is
 going to be equal to <span class="docutils literal"><span class="pre">0.06</span></span> (which is <span class="docutils literal"><span class="pre">0.12</span> <span class="pre">/</span> <span class="pre">2</span></span>),
 after <span class="docutils literal"><span class="pre">200</span></span> epochs <span class="docutils literal"><span class="pre">step</span></span> is going to be equal to
 <span class="docutils literal"><span class="pre">0.04</span></span> (which is <span class="docutils literal"><span class="pre">0.12</span> <span class="pre">/</span> <span class="pre">3</span></span>) and so on.</p>
-<p>Defaults to <span class="docutils literal"><span class="pre">100</span></span> epochs.</p>
-</div></blockquote>
+<p class="last">Defaults to <span class="docutils literal"><span class="pre">100</span></span> epochs.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Warns:</th><td class="field-body"><p class="first last"><strong>It works only with algorithms based on backpropagation.</strong></p>
+<tr class="field-even field"><th class="field-name">Warns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>It works only with algorithms based on backpropagation.</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -266,7 +277,7 @@ after <span class="docutils literal"><span class="pre">200</span></span> epochs 
 <p class="rubric">Notes</p>
 <p>Step will be reduced faster when you have smaller training batches.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy</span> <span class="kn">import</span> <span class="n">algorithms</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy</span> <span class="k">import</span> <span class="n">algorithms</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bpnet</span> <span class="o">=</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">GradientDescent</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>

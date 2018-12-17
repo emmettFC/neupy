@@ -28,15 +28,16 @@
         <script>window.jQuery || document.write('<script src="../_static/vendor/jquery-1.8.2.min.js"><\/script>')</script>
         <script src="../_static/plugins.js"></script>
         <script src="../_static/main.js"></script>
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.html" /><script type="text/javascript">
+        <link rel="search" title="Search" href="../search.html" /><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.html" /><script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5',
+        VERSION:     '1.7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
-    </script><script type="text/javascript" src="../_static/underscore.js"></script><script type="text/javascript" src="../_static/doctools.js"></script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript" src="../_static/disqus.js"></script><script type="text/javascript" src="../_static/js/google_analytics.js"></script><script type="text/javascript" src="../_static/js/script.js"></script><script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    </script><script type="text/javascript" src="../_static/underscore.js"></script><script type="text/javascript" src="../_static/doctools.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript" src="../_static/disqus.js"></script><script type="text/javascript" src="../_static/js/google_analytics.js"></script><script type="text/javascript" src="../_static/js/script.js"></script><script type="text/javascript" src="../_static/js/copybutton.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -51,10 +52,16 @@
         img { max-width: 800px !important; }
         img[src="../_images/mnist-code-sample-home.png"] { max-width: 600px !important; }
         table { background-color: white; }
+        table.docutils.citation  { background-color: inherit; }
         div.highlight { margin-bottom: 20px !important; }
 
         .limited-width { max-width: 800px; margin: auto; }
         .docutils { width: 100%; }
+        a .docutils.literal {
+            background-color: inherit !important;
+            padding: 0px !important;
+            color: #3bbc46 !important;
+        }
         .docutils td { padding: 10px; }
         .section { word-wrap:break-word; }
         .descname { font-weight: bold; }
@@ -237,71 +244,69 @@ functions.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-even field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -314,7 +319,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.ActivationLayer.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -325,7 +330,11 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_value</strong></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_value</strong></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -351,71 +360,81 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Linear Regression</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Linear</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -427,7 +446,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.Linear.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -440,71 +459,81 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Sigmoid</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Sigmoid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -516,7 +545,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.Sigmoid.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -529,71 +558,81 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">HardSigmoid</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -605,7 +644,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.HardSigmoid.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -618,71 +657,81 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Tanh</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -694,7 +743,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.Tanh.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -707,78 +756,98 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>alpha</strong> : float</p>
-<blockquote>
-<div><p>Alpha parameter defines the decreasing rate
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>alpha</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Alpha parameter defines the decreasing rate
 for the negative values. If <span class="docutils literal"><span class="pre">alpha</span></span>
 is non-zero value then layer behave like a
 leaky ReLu. Defaults to <span class="docutils literal"><span class="pre">0</span></span>.</p>
-</div></blockquote>
-<p><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+</dd>
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal(gain=2)</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal(gain=2)</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Relu</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Relu</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Convolutional Neural Networks (CNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">Input</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">Convolution</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">Relu</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">Convolution</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">Relu</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">Reshape</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">Softmax</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -795,7 +864,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.Relu.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='Relu', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'alpha': Option(class_name='Relu', value=NumberProperty(name=&quot;alpha&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'alpha': Option(class_name='Relu', value=NumberProperty(name=&quot;alpha&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='Relu', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -813,71 +882,81 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Softplus</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -889,7 +968,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.Softplus.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -902,71 +981,91 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Relu</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Softmax</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Convolutional Neural Networks (CNN) for Semantic Segmentation</p>
+<p>Softmax layer can be used in order to normalize probabilities
+per pixel. In the example below, we have input 32x32 input image
+with raw prediction  per each pixel for 10 different classes.
+Softmax normalizes raw predictions per pixel to the probability
+distribution.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">Softmax</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -978,7 +1077,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.Softmax.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -992,78 +1091,88 @@ activation function.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r1" rules="none">
+<table class="docutils citation" frame="void" id="r4af1f2c1324a-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R1]</a></td><td><a class="reference external" href="http://arxiv.org/pdf/1511.07289v3.pdf">http://arxiv.org/pdf/1511.07289v3.pdf</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://arxiv.org/pdf/1511.07289v3.pdf">http://arxiv.org/pdf/1511.07289v3.pdf</a></td></tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Elu</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Elu</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -1075,7 +1184,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.Elu.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1089,93 +1198,112 @@ function.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>alpha_axes</strong> : int or tuple</p>
-<blockquote>
-<div><p>Axes that will not include unique alpha parameter.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>alpha_axes</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or tuple</span></dt>
+<dd><p class="first last">Axes that will not include unique alpha parameter.
 Single integer value defines the same as a tuple with one value.
 Defaults to <span class="docutils literal"><span class="pre">-1</span></span>.</p>
-</div></blockquote>
-<p><strong>alpha</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Alpha parameter per each non-shared axis for the ReLu.
+</dd>
+<dt><strong>alpha</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Alpha parameter per each non-shared axis for the ReLu.
 Scalar value means that each element in the tensor will be
 equal to the specified value.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
 Defaults to <span class="docutils literal"><span class="pre">Constant(value=0.25)</span></span>.</p>
-</div></blockquote>
-<p><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+</dd>
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r2" rules="none">
+<table class="docutils citation" frame="void" id="rbbc8e7225c34-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[R2]</a></td><td><a class="reference external" href="https://arxiv.org/pdf/1502.01852v1.pdf">https://arxiv.org/pdf/1502.01852v1.pdf</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td><a class="reference external" href="https://arxiv.org/pdf/1502.01852v1.pdf">https://arxiv.org/pdf/1502.01852v1.pdf</a></td></tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">PRelu</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">PRelu</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Convolutional Neural Networks (CNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">Input</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">Convolution</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">PRelu</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">Convolution</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">PRelu</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">Reshape</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">Softmax</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -1203,7 +1331,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.PRelu.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'alpha_axes': Option(class_name='PRelu', value=AxesProperty(name=&quot;alpha_axes&quot;)), 'alpha': Option(class_name='PRelu', value=ParameterProperty(name=&quot;alpha&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'alpha': Option(class_name='PRelu', value=ParameterProperty(name=&quot;alpha&quot;)), 'alpha_axes': Option(class_name='PRelu', value=AxesProperty(name=&quot;alpha_axes&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1214,7 +1342,11 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_shape</strong> : tuple with int</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple with int</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1231,73 +1363,83 @@ activation function.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>size</strong> : int or None</p>
-<blockquote>
-<div><p>Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or None</span></dt>
+<dd><p class="first last">Layer input size. <span class="docutils literal"><span class="pre">None</span></span> means that layer will not create
 parameters and will return only activation function
 output for the specified input value.</p>
-</div></blockquote>
-<p><strong>weight</strong> : array-like, Tensorfow variable, scalar or Initializer</p>
-<blockquote>
-<div><p>Defines layer&#8217;s weights. Default initialization methods
-you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>.
-Defaults to <a class="reference internal" href="neupy.init.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
-</div></blockquote>
-<p><strong>bias</strong> : 1D array-like, Tensorfow variable, scalar, Initializer or None</p>
-<blockquote>
-<div><p>Defines layer&#8217;s bias.
+</dd>
+<dt><strong>weight</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, Tensorfow variable, scalar or Initializer</span></dt>
+<dd><p class="first last">Defines layer’s weights. Default initialization methods
+you can find <a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>.
+Defaults to <a class="reference internal" href="../modules/generated/neupy.init.HeNormal.html#neupy.init.HeNormal" title="neupy.init.HeNormal"><span class="xref py py-class docutils literal"><span class="pre">HeNormal()</span></span></a>.</p>
+</dd>
+<dt><strong>bias</strong> <span class="classifier-delimiter">:</span> <span class="classifier">1D array-like, Tensorfow variable, scalar, Initializer or None</span></dt>
+<dd><p class="first last">Defines layer’s bias.
 Default initialization methods you can find
-<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span>here</span></a>. Defaults to
-<a class="reference internal" href="neupy.init.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
+<a class="reference internal" href="../pages/cheatsheet.html#init-methods"><span class="std std-ref">here</span></a>. Defaults to
+<a class="reference internal" href="../modules/generated/neupy.init.Constant.html#neupy.init.Constant" title="neupy.init.Constant"><span class="xref py py-class docutils literal"><span class="pre">Constant(0)</span></span></a>.
 The <span class="docutils literal"><span class="pre">None</span></span> value excludes bias from the calculations and
 do not add it into parameters list.</p>
-</div></blockquote>
-<p><strong>name</strong> : str or None</p>
-<blockquote class="last">
-<div><p>Layer&#8217;s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd><p class="first last">Layer’s identifier. If name is equal to <span class="docutils literal"><span class="pre">None</span></span> than name
 will be generated automatically. Defaults to <span class="docutils literal"><span class="pre">None</span></span>.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Notes</p>
-<p>Do the same as <span class="docutils literal"><span class="pre">layers.Relu(input_size,</span> <span class="pre">alpha=0.01)</span></span>.</p>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="83%" />
-</colgroup>
+<p>Do the same as <span class="docutils literal"><span class="pre">Relu(input_size,</span> <span class="pre">alpha=0.01)</span></span>.</p>
+<p class="rubric">Examples</p>
+<p>Feedforward Neural Networks (FNN)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">neupy.layers</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">LeakyRelu</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">LeakyRelu</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-odd"><td>input_shape</td>
-<td>(tuple) Layer&#8217;s input shape.</td>
-</tr>
-<tr class="row-even"><td>output_shape</td>
-<td>(tuple) Layer&#8217;s output shape.</td>
-</tr>
-<tr class="row-odd"><td>training_state</td>
-<td>(bool) Defines whether layer in training state or not.</td>
-</tr>
-<tr class="row-even"><td>parameters</td>
-<td>(dict) Trainable parameters.</td>
-</tr>
-<tr class="row-odd"><td>graph</td>
-<td>(LayerGraph instance) Graphs that stores all relations between layers.</td>
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s input shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>output_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Returns layer’s output shape in the form of a tuple. Shape will
+not include batch size dimension.</p>
+</dd>
+<dt><strong>training_state</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Defines whether layer in training state or not. Training state
+will enable some operations inside of the layers that won’t
+work otherwise.</p>
+</dd>
+<dt><strong>parameters</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Parameters that networks uses during propagation. It might include
+trainable and non-trainable parameters.</p>
+</dd>
+<dt><strong>graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">LayerGraph instance</span></dt>
+<dd><p class="first last">Graphs that stores all relations between layers.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="35%" />
+<col width="65%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>disable_training_state()</td>
-<td>Swith off trainig state.</td>
+<tr class="row-odd"><td><strong>disable_training_state()</strong></td>
+<td>Context manager that switches off trainig state.</td>
 </tr>
-<tr class="row-even"><td>initialize()</td>
+<tr class="row-even"><td><strong>initialize()</strong></td>
 <td>Set up important configurations related to the layer.</td>
 </tr>
 </tbody>
@@ -1309,7 +1451,7 @@ will be generated automatically. Defaults to <span class="docutils literal"><spa
 
 <dl class="attribute">
 <dt id="neupy.layers.activations.LeakyRelu.options">
-<span class="descname">options</span><em class="property"> = {'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;)), 'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
+<span class="descname">options</span><em class="property"> = {'bias': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;bias&quot;)), 'name': Option(class_name='BaseLayer', value=Property(name=&quot;name&quot;)), 'size': Option(class_name='ActivationLayer', value=IntProperty(name=&quot;size&quot;)), 'weight': Option(class_name='ParameterBasedLayer', value=ParameterProperty(name=&quot;weight&quot;))}</em><a class="reference external" href="https://github.com/itdxer/neupy/tree/master/neupy/layers/activations.py"><span class="viewcode-link">[source]</span></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
