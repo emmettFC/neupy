@@ -164,7 +164,7 @@ class GrowingNeuralGas(BaseNetwork):
 
     {BaseNetwork.shuffle_data}
 
-    {BaseNetwork.epoch_end_signal}
+    {BaseNetwork.signals}
 
     {Verbose.verbose}
 
